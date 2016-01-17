@@ -9,7 +9,7 @@ require 'omniauth-trezor'
 use Rack::Session::Cookie
 
 use OmniAuth::Builder do
-  provider :trezor, :datetime, 'https://example.com/icon.png'
+  provider :trezor, hosticon: 'https://example.com/icon.png'
 end
 
 get '/' do

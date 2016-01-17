@@ -7,17 +7,15 @@ module OmniAuth
     class Trezor
       include OmniAuth::Strategy
 
-      args [:challenge_visual, :hosticon]
+      option :visual_challenge, Time.now.strftime("%Y-%m-%d %H:%M:%S")
+      option :hidden_challenge, SecureRandom.hex(32)
+      option :hosticon
       option :fields, [:public_key, :signature]
       option :uid_field, :public_key
 
       def request_phase
-        visual_challenge = options[:challenge_visual]
-        visual_challenge = Time.now.strftime("%Y-%m-%d %H:%M:%S") if visual_challenge==:datetime
-        hidden_challenge = SecureRandom.hex(32)
-
-        session['omniauth.trezor_visual_challenge'] = visual_challenge
-        session['omniauth.trezor_hidden_challenge'] = hidden_challenge
+        session['omniauth.trezor_visual_challenge'] = options[:visual_challenge]
+        session['omniauth.trezor_hidden_challenge'] = options[:hidden_challenge]
 
         OmniAuth::Form.build(
           title: "Trezor Login",
@@ -27,7 +25,7 @@ module OmniAuth
             <script src="https://trezor.github.io/connect/login.js"></script>
             <script type='text/javascript'>
               function trezorLogin() {
-                TrezorConnect.requestLogin('#{options[:hosticon]}', '#{hidden_challenge}', '#{visual_challenge}', function (result) {
+                TrezorConnect.requestLogin('#{options[:hosticon]}', '#{options[:hidden_challenge]}', '#{options[:visual_challenge]}', function (result) {
                     if (result.success) {
                         $('input[name=public_key]').val(result.public_key);
                         $('input[name=signature]').val(result.signature);
@@ -49,7 +47,7 @@ module OmniAuth
         ) do |f|
           f.input_field('hidden', 'public_key')
           f.input_field('hidden', 'signature')
-          f.html "<p>Logging in at: #{visual_challenge}</p>"
+          f.html "<p>Logging in at: #{options[:visual_challenge]}</p>"
         end.to_response
       end
 
