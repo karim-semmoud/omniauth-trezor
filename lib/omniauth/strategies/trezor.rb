@@ -16,10 +16,8 @@ module OmniAuth
         visual_challenge = Time.now.strftime("%Y-%m-%d %H:%M:%S") if visual_challenge==:datetime
         hidden_challenge = SecureRandom.hex(32)
 
-        session['omniauth.trezor'] = {
-          visual_challenge: visual_challenge,
-          hidden_challenge: hidden_challenge
-        }
+        session['omniauth.trezor_visual_challenge'] = visual_challenge
+        session['omniauth.trezor_hidden_challenge'] = hidden_challenge
 
         OmniAuth::Form.build(
           title: "Trezor Login",
@@ -75,8 +73,8 @@ module OmniAuth
 
       extra do
         {
-          hidden_challenge: session['omniauth.trezor'][:hidden_challenge],
-          visual_challenge: session['omniauth.trezor'][:visual_challenge],
+          hidden_challenge: session['omniauth.trezor_hidden_challenge'],
+          visual_challenge: session['omniauth.trezor_visual_challenge'],
           public_key: request.params['public_key'],
           signature: request.params['signature']
         }
