@@ -1,4 +1,4 @@
-# omniauth-trezor
+# omniauth-trezor [![gem badge](https://img.shields.io/gem/v/omniauth-trezor.svg)](https://rubygems.org/gems/omniauth-trezor) [![dotate](https://img.shields.io/badge/bitcoin-donate-yellow.svg)](#donations)
 
 `omniauth-trezor` provides an [OmniAuth][omniauth] strategy for [Trezor Connect][trezor_connect].
 
@@ -60,6 +60,10 @@ Challenge-response authentication via TREZOR. To protect against replay attacks,
 ### Callback phase
 
 After successful authentication `request.env['omniauth.auth'].extra` contains all data that was used to verify the signature: `visual_challenge`, `hidden_challenge`, `signature` and `public_key` for your additional needs (ie. audit log).
+
+## Donations
+
+Please support development of this library by donating at: 1EqK3cYaeRWnzzEYTXcXsWBhukJcv5EpXQ
 
 ## Contributing
 
