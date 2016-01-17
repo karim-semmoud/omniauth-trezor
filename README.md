@@ -47,6 +47,8 @@ post '/auth/trezor/callback' do
 end
 ```
 
+`request.env['omniauth.auth'].extra` contains `visual_challenge`, `hidden_challenge`, `signature` and `public_key`.
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/kraxnet/omniauth-trezor.
