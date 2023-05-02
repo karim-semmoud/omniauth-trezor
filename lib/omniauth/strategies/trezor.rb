@@ -12,6 +12,7 @@ module OmniAuth
       option :hosticon
       option :fields, [:public_key, :signature]
       option :uid_field, :public_key
+      options :redirect_uri: "/users/auth/trezor/callback",
 
       def request_phase
         visual_challenge = options[:challenge_visual]
