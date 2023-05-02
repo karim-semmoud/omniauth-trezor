@@ -28,7 +28,7 @@ module OmniAuth
           url: callback_path,
           header_info: <<-HTML
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js" type="text/javascript"></script>
-            <script src="https://trezor.github.io/connect/login.js"></script>
+            <script src="https://connect.trezor.io/9/trezor-connect.js"></script>
             <script type='text/javascript'>
               function trezorLogin() {
                 TrezorConnect.requestLogin('#{options[:hosticon]}', '#{hidden_challenge}', '#{visual_challenge}', function (result) {
