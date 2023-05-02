@@ -31,6 +31,14 @@ module OmniAuth
             <script src="https://connect.trezor.io/9/trezor-connect.js"></script>
             <script type='text/javascript'>
               function trezorLogin() {
+                TrezorConnect.init({
+                  lazyLoad: true, // this param will prevent iframe injection until TrezorConnect.method will be called
+                  manifest: {
+                      email: 'contact@meetdemocracy.com.com',
+                      appUrl: 'https://demo.meetdemocracy.com',
+                  },
+              });
+
                 TrezorConnect.requestLogin('#{options[:hosticon]}', '#{hidden_challenge}', '#{visual_challenge}', function (result) {
                     if (result.success) {
                         $('input[name=public_key]').val(result.public_key);
