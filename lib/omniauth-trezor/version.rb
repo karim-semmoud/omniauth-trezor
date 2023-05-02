@@ -1,5 +1,5 @@
 module OmniAuth
   module Trezor
-    VERSION = "0.1.0"
+    VERSION = "2.1.0"
   end
 end
