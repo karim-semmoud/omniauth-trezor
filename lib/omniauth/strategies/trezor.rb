@@ -12,7 +12,6 @@ module OmniAuth
       option :hosticon
       option :fields, [:public_key, :signature]
       option :uid_field, :public_key
-      option :redirect_uri, "/users/auth/trezor/callback"
 
       def request_phase
         visual_challenge = options[:challenge_visual]
@@ -40,7 +39,7 @@ module OmniAuth
                   },
               });
 
-                TrezorConnect.requestLogin('#{options[:hosticon]}', '#{hidden_challenge}', '#{visual_challenge}', function (result) {
+                TrezorConnect.requestLogin('#{hidden_challenge}', '#{visual_challenge}', function (result) {
                     if (result.success) {
                         $('input[name=public_key]').val(result.public_key);
                         $('input[name=signature]').val(result.signature);
@@ -64,6 +63,10 @@ module OmniAuth
           f.input_field('hidden', 'signature')
           f.html "<p>Logging in at: #{visual_challenge}</p>"
         end.to_response
+      end
+
+      def callback_url
+        full_host + script_name + callback_path
       end
 
       def callback_phase
